@@ -1,0 +1,38 @@
+<% layout('/layouts/boilerplate') -%>
+
+    <body>
+
+        <form action="/listings" method="post">
+            <div class="form_div">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" name="listings[title]" id="title" class="form-control" placeholder="Enter Title">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="listings[description]" id="description" class="form-control"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image</label>
+                    <input type="text" name="listings[image]" id="image" class="form-control"
+                        placeholder="Enter Image Url">
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="text" name="listings[price]" id="price" type="number" class="form-control"
+                        placeholder="Enter Price">
+                </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" name="listings[location]" id="location" class="form-control"
+                        placeholder="Enter Location">
+                </div>
+                <div class="mb-3">
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" name="listings[country]" id="country" class="form-control"
+                        placeholder="Enter Country">
+                </div>
+                <button class="btn btn-primary">Add</button>
+            </div>
+        </form>
+    </body>

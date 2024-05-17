@@ -1,0 +1,37 @@
+<% layout('/layouts/boilerplate') -%>
+<body>
+
+    <form action="/listings/<%= data[0]._id %>?_method=PATCH" method="post">
+        <div class="form_div">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" name="listings[title]" id="title" class="form-control" value="<%= data[0].title %>">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="listings[description]" id="description" class="form-control"><%= data[0].description %></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Image</label>
+                <input type="text" name="listings[image]" id="image" class="form-control"
+                    placeholder="Enter Image Url" value="<%= data[0].image %>" %>>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="text" name="listings[price]" id="price" type="number" class="form-control"
+                    placeholder="Enter Price" value="<%= data[0].price %>" %>>
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" name="listings[location]" id="location" class="form-control"
+                    placeholder="Enter Location" value="<%= data[0].location %>">
+            </div>
+            <div class="mb-3">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" name="listings[country]" id="country" class="form-control"
+                    placeholder="Enter Country" value="<%= data[0].country %>">
+            </div>
+            <button class="btn btn-primary">Edit</button>
+        </div>
+    </form>
+</body>
