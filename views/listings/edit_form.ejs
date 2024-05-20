@@ -1,37 +1,58 @@
 <% layout('/layouts/boilerplate') -%>
-<body>
 
-    <form action="/listings/<%= data[0]._id %>?_method=PATCH" method="post">
-        <div class="form_div">
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" name="listings[title]" id="title" class="form-control" value="<%= data[0].title %>">
+    <body>
+
+        <form action="/listings/<%= data[0]._id %>?_method=PATCH" method="post" class="needs-validation" novalidate>
+            <div class="form_div">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" name="listings[title]" id="title" class="form-control"
+                        value="<%= data[0].title %>" required>
+                        <div class="invalid-feedback">
+                            Enter Valid Title.
+                        </div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea name="listings[description]" id="description"
+                        class="form-control" required><%= data[0].description %></textarea>
+                        <div class="invalid-feedback">
+                            Enter Valid Description.
+                        </div>
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Image</label>
+                    <input type="text" name="listings[image]" id="image" required class="form-control"
+                        placeholder="Enter Image Url" value="<%= data[0].image %>" %>>
+                        <div class="invalid-feedback">
+                            Enter Valid Image.
+                        </div>
+                </div>
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="text" name="listings[price]" required id="price" type="number" class="form-control"
+                        placeholder="Enter Price" value="<%= data[0].price %>" %>>
+                        <div class="invalid-feedback">
+                            Enter Valid Price.
+                        </div>
+                </div>
+                <div class="mb-3">
+                    <label for="location" class="form-label">Location</label>
+                    <input type="text" name="listings[location]" required id="location" class="form-control"
+                        placeholder="Enter Location" value="<%= data[0].location %>">
+                        <div class="invalid-feedback">
+                            Enter Valid Location.
+                        </div>
+                </div>
+                <div class="mb-3">
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" name="listings[country]" required id="country" class="form-control"
+                        placeholder="Enter Country" value="<%= data[0].country %>">
+                        <div class="invalid-feedback">
+                            Enter Valid Country.
+                        </div>
+                </div>
+                <button class="btn btn-primary">Edit</button>
             </div>
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea name="listings[description]" id="description" class="form-control"><%= data[0].description %></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="image" class="form-label">Image</label>
-                <input type="text" name="listings[image]" id="image" class="form-control"
-                    placeholder="Enter Image Url" value="<%= data[0].image %>" %>>
-            </div>
-            <div class="mb-3">
-                <label for="price" class="form-label">Price</label>
-                <input type="text" name="listings[price]" id="price" type="number" class="form-control"
-                    placeholder="Enter Price" value="<%= data[0].price %>" %>>
-            </div>
-            <div class="mb-3">
-                <label for="location" class="form-label">Location</label>
-                <input type="text" name="listings[location]" id="location" class="form-control"
-                    placeholder="Enter Location" value="<%= data[0].location %>">
-            </div>
-            <div class="mb-3">
-                <label for="country" class="form-label">Country</label>
-                <input type="text" name="listings[country]" id="country" class="form-control"
-                    placeholder="Enter Country" value="<%= data[0].country %>">
-            </div>
-            <button class="btn btn-primary">Edit</button>
-        </div>
-    </form>
-</body>
+        </form>
+    </body>
