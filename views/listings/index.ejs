@@ -1,8 +1,8 @@
 <% layout('/layouts/boilerplate') -%>
 <body>
-        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+        <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 listing_card">
             <% for( let index = 0; index < data.length; index++ ) { %>
-                <div class="card" style="width: 20rem;">
+                <div class="card listing_card" style="width: 20rem;">
                     <a href="listings/<%= data[index]._id %>" class="card_anchor">
                         <img src="<%= data[index].image %>" class="card-img-top" alt="..." style="height: 20rem;" >
                         <div class="card-body">
