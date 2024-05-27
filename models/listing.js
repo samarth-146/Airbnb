@@ -29,7 +29,11 @@ const ListSchema = mongoose.Schema({
     },
     reviews:[
         {type:mongoose.Schema.Types.ObjectId,ref:'Review'}
-    ]
+    ],
+    owner:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+    }
 });
 
 //Middleware if listing is deleted..

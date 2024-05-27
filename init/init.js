@@ -7,9 +7,17 @@ async function main(){
 };
 
 main()
+.then((res)=>{
+  console.log("Successful");
+})
 .catch((err)=>{
   console.log(err);
 });
 
-Listing.deleteMany({});
-Listing.insertMany(sampleData.data);
+async function initData(){
+  await Listing.deleteMany({});
+  sampleData.data=sampleData.data.map((obj)=>({...obj,owner:"66544677d8419487c49f15d7"}));
+  await Listing.insertMany(sampleData.data);
+  console.log("Data initialised");
+};
+initData();

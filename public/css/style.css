@@ -25,6 +25,7 @@
     flex-wrap: wrap;
     flex-direction: column;
     background-color: gray;
+    width: 100% !important;
 
 }
 
@@ -107,4 +108,8 @@
     justify-content: center;
     align-items: center;
 }
-
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 65vh;
+}
