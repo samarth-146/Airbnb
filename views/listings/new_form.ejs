@@ -2,7 +2,7 @@
 
     <body>
 
-        <form action="/listings" method="post" class="needs-validation" novalidate>
+        <form action="/listings" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
             <div class="form_div">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title</label>
@@ -20,8 +20,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="image" class="form-label">Image</label>
-                    <input type="text" name="listings[image]" id="image" class="form-control"
-                        placeholder="Enter Image Url" required>
+                    <input type="file" name="listings[image]" id="image" class="form-control"
+                        placeholder="Upload Image" required>
                         <div class="invalid-feedback">
                             Enter Valid Image.
                         </div>
@@ -49,6 +49,16 @@
                         <div class="invalid-feedback">
                             Enter Valid Country.
                         </div>
+                </div>
+                <div class="mb-3">
+                    <label for="select">Select</label>
+                    <select class="form-select" aria-label="Default select example" id="select" name="listings[category]">
+                        <option selected>Open this select menu</option>
+                        <option value="villa">Villa</option>
+                        <option value="cabins">Cabins</option>
+                        <option value="farms">Farm</option>
+                        <option value="mountains">Mountains</option>
+                      </select>
                 </div>
                 <button class="btn btn-primary">Add</button>
             </div>

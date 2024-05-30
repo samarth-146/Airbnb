@@ -4,6 +4,11 @@ const wrapAsync=require('../utils/wrapAsync');
 const CustomError=require('../utils/customerr');
 const {listingSchema}=require('../schemavalidator');
 const Listing=require('../models/listing');
+const {storage}=require('../cloudconfig');
+const multer  = require('multer');
+const upload = multer({ storage });
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const geocodingClient = mbxGeocoding({ accessToken: process.env.MAP_TOKEN });
 
 //Server Side Validation
 function validateListings(req,res,next){
@@ -21,6 +26,7 @@ router.get('/',wrapAsync(async(req,res)=>{
     const data=await Listing.find();
     res.render("listings/index.ejs",{data});
 }));
+
 
 //Form rendering for new listings
 router.get('/new',(req,res)=>{
@@ -49,10 +55,22 @@ router.get('/:id',wrapAsync(async(req,res,next)=>{
 }));
 
 //Add Route
-router.post('/',validateListings,wrapAsync(async(req,res)=>{
+router.post('/',upload.single('listings[image]'),validateListings,wrapAsync(async(req,res)=>{
+    if(!req.isAuthenticated()){
+        req.flash("error","You must be logged in");
+        return res.redirect('/listings');
+    }
+    const forwardgeocoding=await geocodingClient.forwardGeocode({
+        query: req.body.listings.location,
+        limit: 1
+      })
+        .send()
+    const url=req.file.path;
+    const filename=req.file.filename;
     const insertData=new Listing(req.body.listings);
-    
     insertData.owner=req.user._id;
+    insertData.image={url,filename};
+    insertData.geometry=forwardgeocoding.body.features[0].geometry
     await insertData.save(); 
     req.flash("success","New Listing Created"); 
     res.redirect("/listings");
@@ -76,7 +94,7 @@ router.get('/edit/:id',wrapAsync(async(req,res)=>{
 }));
 
 //Edit Route
-router.patch('/:id',validateListings,wrapAsync(async(req,res)=>{
+router.patch('/:id',upload.single('listings[image]'),validateListings,wrapAsync(async(req,res)=>{
     const {id}=req.params;
     if(!req.isAuthenticated()){
         req.session.originalUrl=req.originalUrl;
@@ -90,7 +108,13 @@ router.patch('/:id',validateListings,wrapAsync(async(req,res)=>{
         return res.redirect(`/listings/${id}`);
     }
     const updatedData=req.body.listings;
-    await Listing.updateOne({_id:id},updatedData);
+    let result=await Listing.findOneAndUpdate({_id:id},updatedData);
+    if(typeof req.file!=="undefined"){
+        let url=req.file.path;
+        let filename=req.file.filename;
+        result.image={url,filename};
+        await result.save();
+    }
     req.flash('success',"Listing is updated");
     res.redirect(`/listings/${id}`);
 }));
@@ -109,9 +133,11 @@ router.delete('/:id',wrapAsync(async(req,res)=>{
         req.flash("error","You do not have permission to delete");
         return res.redirect(`/listings/${id}`);
     }
-    await Listing.findByIdAndDelete(id);
+    let result=await Listing.findByIdAndDelete(id);
     req.flash('success',"Listing is deleted");
     res.redirect('/listings');
 }));
+
+
 
 module.exports=router;

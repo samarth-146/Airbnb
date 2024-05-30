@@ -4,11 +4,15 @@
 
         <div class="row">
             <div class="col-8 offset-2">
-                <h1><%= data[0].title %></h1>
+                <h1>
+                    <%= data[0].title %>
+                </h1>
             </div>
             <div class="card show_card col-6 offset-2 mt-3 listing_card">
-                <img src="<%= data[0].image %>" class="card-img-top show_img" alt="Loading...">
-                <p>Owned By: <b><%= data[0].owner.username %></b></p>
+                <img src="<%= data[0].image.url %>" class="card-img-top show_img" alt="Loading...">
+                <p>Owned By: <b>
+                        <%= data[0].owner.username %>
+                    </b></p>
                 <div class="card-body">
                     <p class="card-text">
                         <%= data[0].description %> <br>
@@ -23,7 +27,7 @@
             </div>
 
         </div>
-        <% if (user && user._id.toString() === data[0].owner._id.toString()) { %>
+        <% if (user && user._id.toString()===data[0].owner._id.toString()) { %>
             <div class="btns">
                 <form action="/listings/edit/<%= data[0]._id %>">
                     <button class="btn btn-dark ">Edit</button>
@@ -32,76 +36,85 @@
                     <button id="delete_btn" class="btn btn-dark offset-10">Delete</button>
                 </form>
             </div>
-        <% } %>
-        <hr>
-        <% if (user) { %>
-        <h2>Add Reviews</h2>
-        <div class="mb-3 mt-4">
-            <form action="/listings/reviews/<%= data[0]._id %>" method="post" class="needs-validation" novalidate>
-                <div class="mb-3">
-                    <label for="rating" class="form-label">Rating</label>
-                    <input type="range" name="reviews[rating]" id="rating" class="form-range" min="1" max="5" required>
-                </div>
-                <div class="mb-3">
-                    <label for="comment" class="form-label">Comment</label>
-                    <textarea id="comment" name="reviews[comment]" class="form-control" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <button class="btn btn-primary">Submit</button>
-                </div>
-            </form>
-        </div>
-        <% } %>
-        <h4>All Reviews</h4>
-
-        <div class="row">
-            <% for( let index=0; index < data[0].reviews.length; index++ ) { %>
-                <div class="card offset-1 mt-3" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title"><%= data[0].reviews[index].owner.username %></h5>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">
-                            <%= data[0].reviews[index].comment %>
-                        </h6>
-                        <p class="card-text">
-                            <% if (data[0].reviews[index].rating===5) { %>
-                                <p>
-                                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                        class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                        class="fa-solid fa-star"></i>
-                                </p>
-                                <% } else if (data[0].reviews[index].rating===4) { %>
-                                    <p>
-                                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                            class="fa-regular fa-star"></i>
-                                    </p>
-                                    <% } else if (data[0].reviews[index].rating===3) { %>
-                                        <p>
-                                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                                class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i
-                                                class="fa-regular fa-star"></i>
-                                        </p>
-                                        <% } else if (data[0].reviews[index].rating===2) { %>
-                                            <p>
-                                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                                    class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i
-                                                    class="fa-regular fa-star"></i>
-                                            </p>
-                                            <% } else if (data[0].reviews[index].rating===1) { %>
-                                                <p>
-                                                    <i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i
-                                                        class="fa-regular fa-star"></i><i
-                                                        class="fa-regular fa-star"></i><i
-                                                        class="fa-regular fa-star"></i>
-                                                </p>
-                                                <% } %>
-
-                        </p>
+            <% } %>
+                <hr>
+                <% if (user) { %>
+                    <h2>Add Reviews</h2>
+                    <div class="mb-3 mt-4">
+                        <form action="/listings/reviews/<%= data[0]._id %>" method="post" class="needs-validation"
+                            novalidate>
+                            <div class="mb-3">
+                                <label for="rating" class="form-label">Rating</label>
+                                <!-- <input type="range" name="reviews[rating]" id="rating" class="form-range" min="1" max="5" required> -->
+                                <fieldset class="starability-basic">
+                                    <input type="radio" id="no-rate" class="input-no-rate" name="reviews[rating]"
+                                        value="1" checked aria-label="No rating." />
+                                    <input type="radio" id="first-rate1" name="reviews[rating]" value="1" />
+                                    <label for="first-rate1" title="Terrible">1 star</label>
+                                    <input type="radio" id="first-rate2" name="reviews[rating]" value="2" />
+                                    <label for="first-rate2" title="Not good">2 stars</label>
+                                    <input type="radio" id="first-rate3" name="reviews[rating]" value="3" />
+                                    <label for="first-rate3" title="Average">3 stars</label>
+                                    <input type="radio" id="first-rate4" name="reviews[rating]" value="4" />
+                                    <label for="first-rate4" title="Very good">4 stars</label>
+                                    <input type="radio" id="first-rate5" name="reviews[rating]" value="5" />
+                                    <label for="first-rate5" title="Amazing">5 stars</label>
+                                </fieldset>
+                            </div>
+                            <div class="mb-3">
+                                <label for="comment" class="form-label">Comment</label>
+                                <textarea id="comment" name="reviews[comment]" class="form-control" required></textarea>
+                                <div class="invalid-feedback">
+                                    Enter Valid Comment.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
                     </div>
-                    <form action="/listings/reviews/<%= data[0]._id %>/<%= data[0].reviews[index]._id %>?_method=DELETE" class="mb-3" method="post">
-                        <button class="btn btn-danger" id="delete_reviews">Delete</button>
-                    </form>
-                </div>
-                <% } %>
-        </div>
+                    <% } %>
+                        <h4>All Reviews</h4>
+
+                        <div class="row">
+                            <% for( let index=0; index < data[0].reviews.length; index++ ) { %>
+                                <div class="card offset-1 mt-3" style="width: 18rem;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <%= data[0].reviews[index].owner.username %>
+                                        </h5>
+                                        <h6 class="card-subtitle mb-2 text-body-secondary">
+                                            <%= data[0].reviews[index].comment %>
+                                        </h6>
+                                        <p class="card-text">
+                                        <p class="starability-result"
+                                            data-rating="<%= data[0].reviews[index].rating %>">
+
+                                        </p>
+                                        </p>
+                                    </div>
+                                    <% if (user && user._id.toString()===data[0].reviews[index].owner._id.toString()) { %>
+                                    <form
+                                        action="/listings/reviews/<%= data[0]._id %>/<%= data[0].reviews[index]._id %>?_method=DELETE"
+                                        class="mb-3" method="post">
+                                        <button class="btn btn-danger" id="delete_reviews">Delete</button>
+                                    </form>
+                                    <% } %>
+                                </div>
+                                <% } %>
+                        </div>
+                        <div id="map" class="col-6 offset-0 mb-3">
+
+                        </div>
+                        <script>
+                            let mapToken = "<%=process.env.MAP_TOKEN%>"
+                            mapboxgl.accessToken = mapToken;
+                            const map = new mapboxgl.Map({
+                                container: 'map',
+                                //eslint-disable-next-line
+                                center: [<%= data[0].geometry.coordinates[0] %>, <%= data[0].geometry.coordinates[1] %>],
+                                zoom: 10
+                            });
+                            let marker=new mapboxgl.Marker({color:"black"}).setLngLat([<%= data[0].geometry.coordinates[0] %>, <%= data[0].geometry.coordinates[1] %>]).addTo(map);
+                        </script>
     </body>

@@ -1,3 +1,6 @@
+if(process.env.NODE_ENV!='production'){
+    require('dotenv').config();
+}
 const express=require('express');
 const app=express();
 const mongoose=require('mongoose');
@@ -8,15 +11,17 @@ const CustomError=require('./utils/customerr');
 const listings=require('./routes/listings');
 const reviews=require('./routes/reviews');
 const session=require('express-session');
+const MongoStore = require('connect-mongo');
 const flash=require('connect-flash');
 const passport=require('passport');
 const LocalStrategy=require('passport-local');
 const User=require('./models/user');
 const users=require('./routes/users');
+const category=require('./routes/category');
 
-
+const atlasUrl=process.env.ATLAS_DB;
 async function main(){
-    await mongoose.connect('mongodb://127.0.0.1:27017/Airbnb');
+    await mongoose.connect(atlasUrl);
 };
 
 main()
@@ -30,9 +35,22 @@ app.set("views",path.join(__dirname,"views"));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(express.static(path.join(__dirname,"public")));
+
+//Store session in mongoAtlas
+const store=MongoStore.create({
+    mongoUrl:atlasUrl,
+    crypto:{
+        secret:process.env.SECRET
+    },
+    touchAfter:24*3600,
+})
+store.on("error",()=>{
+    console.log("Error in mongostore");
+})
 //Session
 app.use(session({
-    secret:"secretcode",
+    store,
+    secret:process.env.SECRET,
     resave:false,
     saveUninitialized:true,
     cookie:{
@@ -70,6 +88,7 @@ app.use((req,res,next)=>{
 app.use('/listings',listings);
 app.use('/listings/reviews/:id',reviews);
 app.use('/',users);
+app.use('/listings/category',category);
 
 //Error Handling Routes
 app.all('*',(req,res,next)=>{

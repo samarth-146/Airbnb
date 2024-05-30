@@ -1,0 +1,18 @@
+<% layout('/layouts/boilerplate') -%>
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 listing_card">
+<% for( let index = 0; index < data.length; index++ ) { %>
+    <div class="card listing_card" style="width: 20rem;">
+        <a href="listings/<%= data[index]._id %>" class="card_anchor">
+            <img src="<%= data[index].image.url %>" class="card-img-top" alt="..." style="height: 20rem;" >
+            <div class="card-body">
+              <h5 class="card-title"><%= data[index].location %>,<%= data[index].country %></h5>
+              <p class="card-text">&#8377;<%= data[index].price.toLocaleString("en-IN") %>/night</p>
+            </div>
+        </a>
+          </div>
+<% } %>
+
+    </div>
+
+</body>

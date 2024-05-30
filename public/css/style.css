@@ -113,3 +113,32 @@
     flex-direction: column;
     min-height: 65vh;
 }
+#map {
+    height: 55vh;
+    width: 45vh;
+}
+.form-select{
+    border-color: black !important;
+}
+.category_div{
+    /* border: 2px solid black; */
+    height: 10vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .category{
+    margin: 1rem;
+    text-align: center;
+    opacity: 0.7;
+  }
+  .category:hover{
+    opacity: 1;
+  }
+  .category>a>div>i{
+    color: black;
+  }
+  .category_anchor{
+    text-decoration: none;
+    color: black;
+  }

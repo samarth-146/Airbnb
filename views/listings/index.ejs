@@ -1,10 +1,40 @@
 <% layout('/layouts/boilerplate') -%>
+<style>
+
+</style>
 <body>
+  <div class="category_div">
+    <div class="category">
+      <a href="/listings/category/villa" class="category_anchor">
+        <div><i class="fa-solid fa-bed"></i></div>
+        <p>Villa</p>
+      </a>
+    </div>
+    <div class="category">
+    <a href="/listings/category/farm" class="category_anchor">
+        <div><i class="fa-solid fa-cow"></i></div>
+        <p>Farms</p>
+      </a>
+    </div>
+    <div class="category">
+      <a href="/listings/category/cabin" class="category_anchor">
+          <div><i class="fa-solid fa-house-flag"></i></div>
+          <p>Cabins</p>
+        </a>
+      </div>
+      <div class="category">
+        <a href="/listings/category/mountain" class="category_anchor">
+            <div><i class="fa-solid fa-mountain-sun"></i></div>
+            <p>Mountains</p>
+          </a>
+        </div>
+
+  </div>
         <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 listing_card">
             <% for( let index = 0; index < data.length; index++ ) { %>
                 <div class="card listing_card" style="width: 20rem;">
                     <a href="listings/<%= data[index]._id %>" class="card_anchor">
-                        <img src="<%= data[index].image %>" class="card-img-top" alt="..." style="height: 20rem;" >
+                        <img src="<%= data[index].image.url %>" class="card-img-top" alt="..." style="height: 20rem;" >
                         <div class="card-body">
                           <h5 class="card-title"><%= data[index].location %>,<%= data[index].country %></h5>
                           <p class="card-text">&#8377;<%= data[index].price.toLocaleString("en-IN") %>/night</p>
